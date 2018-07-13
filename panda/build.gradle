@@ -1,0 +1,147 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/snapshot' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven {
+            name "lightbend-maven-release"
+            url "https://repo.lightbend.com/lightbend/maven-releases"
+        }
+        maven{
+            name "Sonatype snapshot repository"
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+        }
+        ivy {
+            name "lightbend-ivy-release"
+            url "https://repo.lightbend.com/lightbend/ivy-releases"
+            layout "ivy"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+group 'panda'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'war'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
+    maven {
+        name "lightbend-maven-release"
+        url "https://repo.lightbend.com/lightbend/maven-releases"
+    }
+    maven{
+        name "Sonatype snapshot repository"
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
+
+jar{
+    baseName='panda'
+    version='1.0.0'
+}
+
+sourceCompatibility = 10
+targetCompatibility = 10
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter"
+    compile "org.springframework.boot:spring-boot-starter-webflux"
+    compile "org.springframework.boot:spring-boot-starter-aop"
+    compile "redis.clients:jedis:2.9.0"
+    compile "org.springframework.boot:spring-boot-starter-data-redis-reactive"
+    compile "org.springframework.boot:spring-boot-starter-freemarker"
+    compile "org.springframework.boot:spring-boot-starter-json"
+    compile "org.springframework.boot:spring-boot-starter-quartz"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-jdbc"
+    compile "org.springframework.boot:spring-boot-starter-log4j2"
+    compile "org.springframework:spring-aspects:5.0.7.RELEASE"
+    compile "org.springframework.security:spring-security-oauth2-core:5.0.6.RELEASE"
+    compile "org.springframework.security:spring-security-oauth2-jose:5.0.6.RELEASE"
+    compile "com.nimbusds:nimbus-jose-jwt:5.12"
+    compile "org.scala-lang:scala-library:2.11.12"
+    compile "org.scala-lang:scala-compiler:2.11.12"
+    compile "org.scala-lang:scala-reflect:2.11.12"
+    compile "org.scala-lang.modules:scala-java8-compat_2.11:0.9.0"
+    compile "com.zaxxer:HikariCP:3.2.0"
+    compile "org.apache.commons:commons-lang3:3.7"
+    compile "commons-io:commons-io:2.6"
+    compile "org.apache.commons:commons-csv:1.5"
+    compile "commons-net:commons-net:3.6"
+    compile "com.jcraft:jsch:0.1.54"
+    compile "com.typesafe.slick:slick_2.11:3.2.3"
+    compile "com.typesafe.slick:slick-hikaricp_2.11:3.2.3"
+    compile "com.typesafe.slick:slick-codegen_2.11:3.2.3"
+    compile "org.slf4j:slf4j-nop:1.7.25"
+    compile "io.strongtyped:active-slick_2.11:0.3.5"
+    compile "com.typesafe.play:play-json_2.11:2.6.9"
+    compile "com.wix:accord-core_2.11:0.7.2"
+    compile "com.wix:accord-api_2.11:0.7.2"
+    runtime "mysql:mysql-connector-java:5.1.46"
+    runtime "org.springframework.boot:spring-boot-devtools"
+    providedRuntime "org.springframework.boot:spring-boot-starter-undertow"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "io.projectreactor:reactor-test"
+    testCompile "org.springframework.security:spring-security-test"
+}
+
+configurations {
+    providedRuntime
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala']
+        }
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+
+    test {
+        scala {
+            srcDirs = ['src/test/scala']
+        }
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
+
+bootJar {
+    launchScript()
+}
+
+springBoot{
+    mainClassName="com.wms.Application"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
