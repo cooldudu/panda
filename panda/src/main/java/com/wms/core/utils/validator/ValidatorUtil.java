@@ -16,17 +16,16 @@ import javax.validation.ValidatorFactory;
 public class ValidatorUtil<T> {
 	/**
 	 * 实体验证
-	 * @param entity实体
-	 * @param name验证的字段名称
+	 * @param name 验证的字段名称
 	 * @return
 	 */
 	public String validate(T entity,String name){
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();
-		Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+		var factory = Validation.buildDefaultValidatorFactory();
+		var validator = factory.getValidator();
+		var constraintViolations = validator.validate(entity);
 		if(constraintViolations.size()>0){
-			StringBuffer result = new StringBuffer("实体 "+name+" 存在异常如下    ");
-			for(ConstraintViolation<T> constraintViolation : constraintViolations){
+			var result = new StringBuffer("实体 "+name+" 存在异常如下    ");
+			for(var constraintViolation : constraintViolations){
 				result.append("字段："+constraintViolation.getPropertyPath()+"  异常："+constraintViolation.getMessage()+",");
 			}
 			return result.toString();

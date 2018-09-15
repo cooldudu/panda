@@ -49,9 +49,9 @@ public class PageContent {
              sort = new Sort(Direction.ASC, this.getSort());  
         }else if(this.getOrder().equals("desc")){  
              sort = new Sort(Direction.DESC, this.getSort());  
-        }  
-        int pageNum = Integer.parseInt(this.getPage())-1;  
-        int rows = Integer.parseInt(this.getRows());  
+        }
+        var pageNum = Integer.parseInt(this.getPage())-1;
+        var rows = Integer.parseInt(this.getRows());
         Pageable pageable = PageRequest.of(pageNum,rows,sort);
         return pageable;
     }

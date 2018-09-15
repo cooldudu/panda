@@ -8,10 +8,10 @@ public class SqlInjectionUtil {
 	public static final String selectSqlKey = "+|drop |@|$|&|1=1| statistics| key_| columns| tables| table_|dba_| user_| all_| session_| index_|$|;| sp_| xp_|\\|cmd |^|show |copy |format|exec |insert |delete |update |chr |master |truncate |char |declare |../|..%2f";
 
 	public static boolean isIllegalParam(String val, String sqlKey) {
-		java.util.StringTokenizer stk = new java.util.StringTokenizer(sqlKey,
+		var stk = new java.util.StringTokenizer(sqlKey,
 				"|");
-		String temp = "";
-		boolean flag = false;
+		var temp = "";
+		var flag = false;
 		while (stk.hasMoreTokens()) {
 			temp = stk.nextToken();
 			if (val.toLowerCase().indexOf(temp) != -1) {

@@ -1,5 +1,6 @@
 package com.wms.core.utils.reflect;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Hashtable;
@@ -60,12 +61,16 @@ public class ReflectHelper {
 
 	public void initObject() {
 		try {
-			this.obj = Class.forName(cls.getName()).newInstance();
+			this.obj = Class.forName(cls.getName()).getDeclaredConstructor().newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}
@@ -78,20 +83,20 @@ public class ReflectHelper {
 		getMethods = new Hashtable<String, Method>();
 		setMethods = new Hashtable<String, Method>();
 		cls = obj.getClass();
-		Method[] methods = cls.getMethods();
+		var methods = cls.getMethods();
 		// 定义正则表达式，从方法中过滤出getter / setter 函数.
-		String gs = "get(\\w+)";
-		Pattern getM = Pattern.compile(gs);
-		String is = "is(\\w+)";/*处理变量声明为boolean情况，建议变量声明为Boolean*/
-		Pattern isM = Pattern.compile(is);
-		String ss = "set(\\w+)";
-		Pattern setM = Pattern.compile(ss);
+		var gs = "get(\\w+)";
+		var getM = Pattern.compile(gs);
+		var is = "is(\\w+)";/*处理变量声明为boolean情况，建议变量声明为Boolean*/
+		var isM = Pattern.compile(is);
+		var ss = "set(\\w+)";
+		var setM = Pattern.compile(ss);
 		// 把方法中的"set" 或者 "get" 去掉
-		String rapl = "$1";
+		var rapl = "$1";
 		String param;
 		for (int i = 0; i < methods.length; ++i) {
-			Method m = methods[i];
-			String methodName = m.getName();
+			var m = methods[i];
+			var methodName = m.getName();
 			if (Pattern.matches(gs, methodName)) {
 				param = getM.matcher(methodName).replaceAll(rapl).toLowerCase();
 				getMethods.put(param, m);

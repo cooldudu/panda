@@ -48,32 +48,32 @@ public class MapReactiveUserDetailsService implements ReactiveUserDetailsService
 
     @Override
     public Mono<UserDetails> findByUsername(String username){
-        IJdbcDao jdbcDao = (IJdbcDao)new ApplicationContextUtil().getApplicationContext().getBean("jdbcDao");
+        var jdbcDao = (IJdbcDao)new ApplicationContextUtil().getApplicationContext().getBean("jdbcDao");
         Map<String,Object> userRs = null;
         List<Map<String,Object>> authorityRs = null;
-        List<String> roles = new ArrayList<String>();
+        var roles = new ArrayList<String>();
         UserDetails user = null;
-        final String getUserListQuery = "select * from t_accounts t where t.username= '?'";
-        final String getAuthoritiesByUsernameQuery = "select u.username,r.rname from t_authorities a inner join t_accounts u on a.account_id=u.id inner join t_roles r on a.role_id=r.id where u.username= '?'";
+        final var getUserListQuery = "select * from t_accounts t where t.username= '?'";
+        final var getAuthoritiesByUsernameQuery = "select u.username,r.rolename from t_authorities a inner join t_accounts u on a.account_id=u.id inner join t_roles r on a.role_id=r.id where u.username= '?'";
         try {
             userRs = jdbcDao.queryForMap(getUserListQuery.replace("?", username));
         }catch (WMSException ex){}
 
         if(ObjectUtils.isNotEmpty(userRs)){
-                String userName = userRs.get("username").toString();
+                var userName = userRs.get("username").toString();
                 try {
                     authorityRs = jdbcDao.queryForList(getAuthoritiesByUsernameQuery.replace("?", username));
                 }catch (WMSException ex){
                     return Mono.empty();
                 }
                 if(ObjectUtils.isNotEmpty(authorityRs)) {
-                    for (Map<String, Object> authority : authorityRs) {
-                        roles.add(authority.get("rname").toString());
+                    for (var authority : authorityRs) {
+                        roles.add(authority.get("rolename").toString());
                     }
-                    UserDetails ud = User.builder().username(userName).password(userRs.get("password").toString())
-                            .disabled((Boolean) userRs.get("ENABLED")).accountExpired((Boolean) userRs.get("ISACCOUNTNONEXPIRED"))
-                            .accountLocked((Boolean) userRs.get("ISACCOUNTNONLOCKED"))
-                            .credentialsExpired((Boolean) userRs.get("ISCREDENTIALSNONEXPIRED"))
+                    var ud = User.builder().username(userName).password(userRs.get("password").toString())
+                            .disabled((Boolean) userRs.get("enabled")).accountExpired((Boolean) userRs.get("isAccoumtNonExpired"))
+                            .accountLocked((Boolean) userRs.get("isAccountNonLocked"))
+                            .credentialsExpired((Boolean) userRs.get("isCredentialsNonExpired"))
                             .roles(roles.toArray(new String[roles.size()]))
                             .passwordEncoder(password -> "{bcrypt}" + password)
                             .build();

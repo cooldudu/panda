@@ -34,8 +34,8 @@ public class Ftpfile {
 	 * @return 成功返回true，否则返回false 
 	 */  
 	public static boolean uploadFile(String url,int port,String username, String password, String path, String filename, InputStream input) {  
-	    boolean success = false;  
-	    FTPClient ftp = new FTPClient();  
+	    var success = false;
+		var ftp = new FTPClient();
 	    try {  
 	        int reply;  
 	        ftp.connect(url, port);//连接FTP服务器  
@@ -45,14 +45,14 @@ public class Ftpfile {
 	        if (!FTPReply.isPositiveCompletion(reply)) {  
 	            ftp.disconnect();  
 	            return success;  
-	        }  
-	       
-	        boolean pathresult=false;
+	        }
+
+			var pathresult=false;
 	        pathresult= ftp.changeWorkingDirectory(path);  
 	        if(!pathresult){//没有此目录
 	        	 // 设置上传目录(没有则创建)  
-//		        boolean result = ftp.makeDirectory(path);//只能创建一级目录，不能级联创建
-		        boolean result = createMultiDir(ftp, path);
+//		        var result = ftp.makeDirectory(path);//只能创建一级目录，不能级联创建
+				var result = createMultiDir(ftp, path);
 				System.out.println(result);
 				ftp.changeWorkingDirectory(path);
 	        }
@@ -85,9 +85,9 @@ public class Ftpfile {
 	 * @param localPath 下载后保存到本地的路径 
 	 * @return 
 	 */  
-	public static boolean downFile(String url, int port,String username, String password, String remotePath,String fileName,String localPath) {  
-	    boolean success = false;  
-	    FTPClient ftp = new FTPClient(); 
+	public static boolean downFile(String url, int port,String username, String password, String remotePath,String fileName,String localPath) {
+		var success = false;
+		var ftp = new FTPClient();
 	    OutputStream is = null;
 	    try {  
 	        int reply;  
@@ -100,15 +100,15 @@ public class Ftpfile {
 	            return success;  
 	        }  
 	        ftp.changeWorkingDirectory(remotePath);//转移到FTP服务器目录  
-	        FTPFile[] fs = ftp.listFiles();  
-	        for(FTPFile ff:fs){  
+			var fs = ftp.listFiles();
+	        for(var ff:fs){
 	            if(ff.getName().equals(fileName)){  
 	                //写入本地
 					if(FileUtil.getExists(localPath)){
 						FileUtil.newFolder(localPath);
 					}
 
-	            	File localFile = new File(localPath+"/"+ff.getName());
+					var localFile = new File(localPath+"/"+ff.getName());
 	                  
 	                 is = new FileOutputStream(localFile);   
 	                ftp.retrieveFile(ff.getName(), is);
@@ -149,8 +149,8 @@ public class Ftpfile {
 	 * @return
 	 */
 	public static boolean downFile(String url, int port,String username, String password, String remotePath,String fileName,String localName,String localPath) {
-		boolean success = false;
-		FTPClient ftp = new FTPClient();
+		var success = false;
+		var ftp = new FTPClient();
 		OutputStream is =null;
 		try {
 			int reply;
@@ -163,15 +163,15 @@ public class Ftpfile {
 				return success;
 			}
 			ftp.changeWorkingDirectory(remotePath);//转移到FTP服务器目录
-			FTPFile[] fs = ftp.listFiles();
-			for(FTPFile ff:fs){
+			var fs = ftp.listFiles();
+			for(var ff:fs){
 				if(ff.getName().equals(fileName)){
 					//写入本地
 					if(FileUtil.getExists(localPath)){
 						FileUtil.newFolder(localPath);
 					}
 
-					File localFile = new File(localPath+"/"+localName);
+					var localFile = new File(localPath+"/"+localName);
 
 					 is = new FileOutputStream(localFile);
 					ftp.retrieveFile(ff.getName(), is);
@@ -206,10 +206,10 @@ public class Ftpfile {
      * @throws IOException
      */
     public static boolean  createMultiDir(FTPClient ftpClient,String multiDir) throws IOException {
-        boolean bool = false;
-        String[] dirs = multiDir.split("/");
+		var bool = false;
+		var dirs = multiDir.split("/");
         ftpClient.changeWorkingDirectory("/");
-        for (int i = 1; dirs != null && i < dirs.length; i++) {
+        for (var i = 1; dirs != null && i < dirs.length; i++) {
             if (!ftpClient.changeWorkingDirectory(dirs[i])) {//不存在
                 if (ftpClient.makeDirectory(dirs[i])) {//创建
                     if (!ftpClient.changeWorkingDirectory(dirs[i])) {
@@ -245,23 +245,23 @@ public class Ftpfile {
             String ftpPassword, int ftpPort, String ftpPath, String localPath,  
             String fileName) throws JSchException {  
         Session session = null;  
-        Channel channel = null;  
-  
-        JSch jsch = new JSch();  
+        Channel channel = null;
+
+		var jsch = new JSch();
         session = jsch.getSession(ftpUserName, ftpHost, ftpPort);  
         session.setPassword(ftpPassword);  
-        session.setTimeout(100000);  
-        Properties config = new Properties();  
+        session.setTimeout(100000);
+		var config = new Properties();
         config.put("StrictHostKeyChecking", "no");  
         session.setConfig(config);  
         session.connect();  
   
         channel = session.openChannel("sftp");  
-        channel.connect();  
-        ChannelSftp chSftp = (ChannelSftp) channel;  
-  
-        String ftpFilePath = ftpPath + "/" + fileName;  
-        String localFilePath = localPath + File.separatorChar + fileName;  
+        channel.connect();
+		var chSftp = (ChannelSftp) channel;
+
+		var ftpFilePath = ftpPath + "/" + fileName;
+		var localFilePath = localPath + File.separatorChar + fileName;
   
         try {  
             chSftp.get(ftpFilePath, localPath);  

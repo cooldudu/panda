@@ -31,7 +31,7 @@ public class ApplicationConfig {
 
     @Bean
     public IJdbcDao jdbcDao() {
-        JdbcDao jdbcDao = new JdbcDao();
+        var jdbcDao = new JdbcDao();
         jdbcDao.setDataSource(this.dataSource());
         return jdbcDao;
     }

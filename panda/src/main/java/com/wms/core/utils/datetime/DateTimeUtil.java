@@ -21,7 +21,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getEndDateOfTodayByDays(int days) {
-		long now = System.currentTimeMillis();
+		var now = System.currentTimeMillis();
 
 		return new Date(now + days * 24L * 60 * 60 * 1000);
 	}
@@ -35,7 +35,7 @@ public class DateTimeUtil {
 		if (reflshDate == null)
 			return "";
 
-		Calendar c = Calendar.getInstance();
+		var c = Calendar.getInstance();
 
 		c.setTime(reflshDate);
 
@@ -45,19 +45,19 @@ public class DateTimeUtil {
 
 		Long time = (new Date().getTime()) - (c.getTimeInMillis());
 
-		int ss = 1000;
-		int mi = ss * 60;
-		int hh = mi * 60;
-		int dd = hh * 24;
+		var ss = 1000;
+		var mi = ss * 60;
+		var hh = mi * 60;
+		var dd = hh * 24;
 
-		long day = time / dd;
-		long hour = (time - day * dd) / hh;
-		long minute = (time - day * dd - hour * hh) / mi;
+		var day = time / dd;
+		var hour = (time - day * dd) / hh;
+		var minute = (time - day * dd - hour * hh) / mi;
 
-		String strDay = "" + day;
-		String strHour = "" + hour;
-		String strMinute = "" + minute;
-		StringBuffer leavetime = new StringBuffer();
+		var strDay = "" + day;
+		var strHour = "" + hour;
+		var strMinute = "" + minute;
+		var leavetime = new StringBuffer();
 		if (!strDay.equals("0")) {
 			leavetime.append(strDay + "天");
 		}
@@ -70,12 +70,12 @@ public class DateTimeUtil {
 
 	//获取指定年月的月份天数
 	public static int getCurrentMonthDay(String time) throws ParseException {
-    	SimpleDateFormat foramt = new SimpleDateFormat("yyyy-MM");
-		Calendar a = Calendar.getInstance();
+    	var foramt = new SimpleDateFormat("yyyy-MM");
+		var a = Calendar.getInstance();
 		a.setTime(foramt.parse(time));
 		a.set(Calendar.DATE, 1);
 		a.roll(Calendar.DATE, -1);
-		int maxDate = a.get(Calendar.DATE);
+		var maxDate = a.get(Calendar.DATE);
 		return maxDate;
 	}
 	/**
@@ -88,7 +88,7 @@ public class DateTimeUtil {
 		if (loginDate == null)
 			return "";
 
-		Calendar c = Calendar.getInstance();
+		var c = Calendar.getInstance();
 
 		c.setTime(loginDate);
 
@@ -98,22 +98,22 @@ public class DateTimeUtil {
 
 		Long time = (new Date().getTime()) - (c.getTimeInMillis());
 
-		int ss = 1000;
-		int mi = ss * 60;
-		int hh = mi * 60;
-		int dd = hh * 24;
+		var ss = 1000;
+		var mi = ss * 60;
+		var hh = mi * 60;
+		var dd = hh * 24;
 
-		long day = time / dd;
-		long hour = (time - day * dd) / hh;
-		long minute = (time - day * dd - hour * hh) / mi;
+		var day = time / dd;
+		var hour = (time - day * dd) / hh;
+		var minute = (time - day * dd - hour * hh) / mi;
 
-		StringBuffer leavetime = new StringBuffer();
+		var leavetime = new StringBuffer();
 		if (day == 0 && hour == 0 && minute < 10) {
 			leavetime.append("刚刚来过");
 		} else {
-			String strDay = "" + day;
-			String strHour = "" + hour;
-			String strMinute = "" + minute;
+			var strDay = "" + day;
+			var strHour = "" + hour;
+			var strMinute = "" + minute;
 
 			if (!strDay.equals("0")) {
 				leavetime.append(strDay + "天");
@@ -132,7 +132,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getBeginDateTimeOfToday() {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
@@ -140,7 +140,7 @@ public class DateTimeUtil {
 	}
 
 	public static Date getBeginDateTimeOfToday(int days) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, days);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -150,7 +150,7 @@ public class DateTimeUtil {
 
 	//获取指定时间的前一天
 	public static Date getBeforeDayTimeOfDay(Date date,int days) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, days);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -161,14 +161,14 @@ public class DateTimeUtil {
 
 	//获取指定当前时间的前N天
 		public static Date getBeforeDayTimeOfDays(Date date,int days) {
-			Calendar calendar = Calendar.getInstance();
+			var calendar = Calendar.getInstance();
 			calendar.setTime(date);
 			calendar.add(Calendar.DATE, days);
 			return calendar.getTime();
 		}
 
 	public static Date getBeginDateTimeOfTodayWithMonth(Date day,int months) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(day);
 		calendar.add(Calendar.MONTH, months);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -183,7 +183,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getEndDateTimeOfToday() {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, 1);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -192,7 +192,7 @@ public class DateTimeUtil {
 	}
 
 	public static Date getEndDateTimeOfToday(int days) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, 1 + days);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
@@ -201,7 +201,7 @@ public class DateTimeUtil {
 	}
 
 	public static Date getEndDateTimeOfTodayWithMonth(Date day,int months) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(day);
 		calendar.add(Calendar.MONTH, months);
 		calendar.add(Calendar.DATE, 1);
@@ -217,7 +217,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getTomorrowOfDate(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, 1);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -227,7 +227,7 @@ public class DateTimeUtil {
 	}
 
 	public static Date getBeforeHourOftoday(Date date,int hour) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, 0);
@@ -241,7 +241,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getHalfOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, 15);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -256,7 +256,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getOneOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, 30);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -271,7 +271,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getOneHalfOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, 45);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -286,7 +286,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getTowOfMonth(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, 60);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -302,8 +302,8 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getYearNo(Date date) {
-		int year = date.getYear();
-		String yearNo = (year + "").substring(1);
+		var year = date.getYear();
+		var yearNo = (year + "").substring(1);
 		return yearNo;
 	}
 
@@ -314,8 +314,8 @@ public class DateTimeUtil {
 	 */
 	@SuppressWarnings("deprecation")
 	public static String getMonthNo(Date date) {
-		int month = date.getMonth();
-		String monthNo = month + 1 + "";
+		var month = date.getMonth();
+		var monthNo = month + 1 + "";
 		if (month < 10) {
 			monthNo = "0" + monthNo;
 		}
@@ -328,7 +328,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getYear(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
 		return String.valueOf(calendar.get(Calendar.YEAR));
@@ -340,7 +340,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getMonthDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
 		return String.valueOf(calendar.get(Calendar.MONTH) + 1);
@@ -351,7 +351,7 @@ public class DateTimeUtil {
 	 * 获得指定日期的所属日期
 	 */
 	public static String getDay(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
 		return String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
@@ -403,7 +403,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date dstrToDate(String dstr) {
-		final SimpleDateFormat DAFAULT_DATE_FORMAT = new SimpleDateFormat(
+		final var DAFAULT_DATE_FORMAT = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		return getDate(dstr, DAFAULT_DATE_FORMAT);
 	}
@@ -415,18 +415,18 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String dateToStr(Date date) {
-		final SimpleDateFormat DAFAULT_DATE_FORMAT = new SimpleDateFormat(
+		final var DAFAULT_DATE_FORMAT = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		return getStr(date, DAFAULT_DATE_FORMAT);
 	}
 	
 	public static String getDateStr(Date date) {
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
+		var format=new SimpleDateFormat("yyyyMMdd");
 		return getStr(date, format);
 	}
 	
 	public static String getMonthStr(Date date) {
-		SimpleDateFormat format=new SimpleDateFormat("yyyyMM");
+		var format=new SimpleDateFormat("yyyyMM");
 		return getStr(date, format);
 	}
 
@@ -455,8 +455,8 @@ public class DateTimeUtil {
 	 * @throws ParseException
 	 */
 	public static Date stringToDate(String time) throws ParseException {
-		DateFormat df = DateFormat.getDateInstance();
-		Date date = df.parse(time);
+		var df = DateFormat.getDateInstance();
+		var date = df.parse(time);
 		return date;
 	}
 
@@ -475,7 +475,7 @@ public class DateTimeUtil {
 	 * @return当前日期
 	 */
 	public static String getCurrentDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD");
+		var sdf = new SimpleDateFormat("yyyy-MM-DD");
 		return sdf.format(new Date());
 	}
 
@@ -485,7 +485,7 @@ public class DateTimeUtil {
 	 * @return当前日期
 	 */
 	public static String getCurrentTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		var sdf = new SimpleDateFormat("HH:mm:ss");
 		return sdf.format(new Date());
 	}
 	/**
@@ -494,7 +494,7 @@ public class DateTimeUtil {
 	 * @return当前日期
 	 */
 	public static String getCurrentDateTime() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		var sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sdf.format(new Date());
 	}
 
@@ -504,7 +504,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getCurrentWeek() {
-		SimpleDateFormat sdf = new SimpleDateFormat("w");
+		var sdf = new SimpleDateFormat("w");
 		return sdf.format(new Date());
 	}
 
@@ -514,7 +514,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getCurrentYear() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+		var sdf = new SimpleDateFormat("yyyy");
 		return sdf.format(new Date());
 	}
 
@@ -524,7 +524,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getCurrentMonth() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM");
+		var sdf = new SimpleDateFormat("MM");
 		return sdf.format(new Date());
 	}
 
@@ -534,17 +534,17 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static String getCurrentDay() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd");
+		var sdf = new SimpleDateFormat("dd");
 		return sdf.format(new Date());
 	}
 
 	public static String getWeekOfDate(Date date) {
 		String[] weekOfDays = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		if (date != null) {
 			calendar.setTime(date);
 		}
-		int w = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+		var w = calendar.get(Calendar.DAY_OF_WEEK) - 1;
 		if (w < 0) {
 			w = 0;
 		}
@@ -558,7 +558,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getMondayOfDate(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		if (date != null) {
 			calendar.setTime(date);
 		}
@@ -576,7 +576,7 @@ public class DateTimeUtil {
 	 * @return
 	 */
 	public static Date getSevenDaysAfter(Date date) {
-		Calendar calendar = Calendar.getInstance();
+		var calendar = Calendar.getInstance();
 		if (date != null) {
 			calendar.setTime(date);
 		}
@@ -589,7 +589,7 @@ public class DateTimeUtil {
 	 */
 	public static Date getLastWeekSunday(Date date){
 
-	    Calendar calendar=Calendar.getInstance(Locale.CHINA);
+	    var calendar=Calendar.getInstance(Locale.CHINA);
 
 	    calendar.setFirstDayOfWeek(Calendar.MONDAY);//将每周第一天设为星期一，默认是星期天
 
@@ -607,7 +607,7 @@ public class DateTimeUtil {
 	 */
 	public static Date getLastWeek1Sunday(Date date){
 
-	    Calendar calendar=Calendar.getInstance(Locale.CHINA);
+	    var calendar=Calendar.getInstance(Locale.CHINA);
 
 	    calendar.setFirstDayOfWeek(Calendar.MONDAY);//将每周第一天设为星期一，默认是星期天
 
@@ -621,10 +621,10 @@ public class DateTimeUtil {
 
 
 	public static String formatCountToTime(Integer count){
-		String resultStr = "";
+		var resultStr = "";
 		Integer hour = null;
 		Integer hourTemp = null;
-		String hourStr = "00:";
+		var hourStr = "00:";
 
 		Integer minute = null;
 		Integer minuteTemp = null;
@@ -701,9 +701,9 @@ public class DateTimeUtil {
 	public static String compareDateStr(String dateStr1,String dateStr2) throws ParseException {
 			dateStr1=dateStr1.replaceAll("\\.", "-");
 			dateStr2=dateStr2.replaceAll("\\.", "-");
-		 	DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-         	Date dt1 = df.parse(dateStr1);
-            Date dt2 = df.parse(dateStr2);
+		 	var df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+         	var dt1 = df.parse(dateStr1);
+            var dt2 = df.parse(dateStr2);
 	        if (dt2.getTime() >= dt1.getTime()) {
 	            return "1";
 	        } else {
@@ -712,7 +712,7 @@ public class DateTimeUtil {
 	}
 	
 	public static void main(String[] args) {
-		String str=getMonthStr(new Date());
+		var str=getMonthStr(new Date());
 		System.out.println(str);
 	}
 

@@ -141,12 +141,12 @@ public class ConvertUtils {
 
 		String reString = null;
 		Reader is = null;
-		StringBuffer sb = new StringBuffer();
+		var sb = new StringBuffer();
 		BufferedReader br = null;
 		try {
 			is = clob.getCharacterStream();// 得到流
 			br = new BufferedReader(is);
-			String s = br.readLine();
+			var s = br.readLine();
 			while (s != null) {// 执行循环将字符串全部取出付值给StringBuffer由StringBuffer转成STRING
 				sb.append(s);
 				s = br.readLine();
@@ -189,7 +189,7 @@ public class ConvertUtils {
 	 * @param str
 	 */
 	public static String getURLDecoder(String str) {
-		String s = "";
+		var s = "";
 		try {
 			s = URLDecoder.decode(str, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -224,7 +224,7 @@ public class ConvertUtils {
 	 * @param <T>
 	 */
 	public static <T> Object[] listToArray(List<T> list) {
-		Object[] strs = list.toArray(new Object[list.size()]);
+		var strs = list.toArray(new Object[list.size()]);
 		return strs;
 	}
 	/**
@@ -254,9 +254,9 @@ public class ConvertUtils {
 	 */
 	public static byte[] inputStreamTOByte(InputStream in) throws IOException {
 
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		byte[] data = new byte[BUFFER_SIZE];
-		int count = -1;
+		var outStream = new ByteArrayOutputStream();
+		var data = new byte[BUFFER_SIZE];
+		var count = -1;
 		while ((count = in.read(data, 0, BUFFER_SIZE)) != -1)
 			outStream.write(data, 0, count);
 
@@ -268,9 +268,9 @@ public class ConvertUtils {
 	 * 数组转换为字符串
 	 */
 	public static String arrayToString(String[] strs) {
-		StringBuffer sb = new StringBuffer();
+		var sb = new StringBuffer();
 		if (!ObjectUtils.isEmpty(strs)) {
-			int i = 0;
+			var i = 0;
 			for (String string : strs) {
 				sb.append(string);
 				i++;
@@ -286,7 +286,7 @@ public class ConvertUtils {
 	public static <T> List<T> mapToList(Map<String, Object> maps) {
 
 		List<T> list = new ArrayList<T>();
-		for (Map.Entry<String, Object> entry : maps.entrySet()) {
+		for (var entry : maps.entrySet()) {
 			list.add((T) entry.getValue());
 		}
 		return list;
@@ -300,7 +300,7 @@ public class ConvertUtils {
 	 */
 	public static InputStream byteTOInputStream(byte[] in) {
 
-		ByteArrayInputStream is = new ByteArrayInputStream(in);
+		var is = new ByteArrayInputStream(in);
 		return is;
 	}
 
@@ -313,7 +313,7 @@ public class ConvertUtils {
 	 */
 	public static InputStream stringTOInputStream(String in) throws Exception {
 
-		ByteArrayInputStream is = new ByteArrayInputStream(in.getBytes("UTF-8"));
+		var is = new ByteArrayInputStream(in.getBytes("UTF-8"));
 		return is;
 	}
 	/**
@@ -327,10 +327,10 @@ public class ConvertUtils {
 	 */
 	public static String inputStreamTOString(InputStream in) {
 
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		byte[] data = new byte[BUFFER_SIZE];
+		var outStream = new ByteArrayOutputStream();
+		var data = new byte[BUFFER_SIZE];
 		String string = null;
-		int count = 0;
+		var count = 0;
 		try {
 			while ((count = in.read(data, 0, BUFFER_SIZE)) != -1)
 				outStream.write(data, 0, count);
@@ -356,7 +356,7 @@ public class ConvertUtils {
 			return null;
 		}
 		List<T> results = new ArrayList<T>();
-		for (Map<String, Object> map : lists) {
+		for (var map : lists) {
 			T t = convertMap2Bean(map, clz);
 			if (t != null) {
 				results.add(t);
@@ -370,24 +370,25 @@ public class ConvertUtils {
 	 * 
 	 * @param clz 需要转换的结果类型
 	 */
+	@SuppressWarnings("deprecation")
 	public static <T> T convertMap2Bean(Map<String, Object> bean, Class<T> clz) {
 		if (bean == null) {
 			return null;
 		}
 		
 		try {
-			T t = clz.newInstance();
-			Field[] fields = t.getClass().getDeclaredFields();
+			T t = clz.getDeclaredConstructor().newInstance();
+			var fields = t.getClass().getDeclaredFields();
 			fields = getSuperFields(clz, Arrays.asList(fields));// 获取父类的属性列表
-			for (Field field : fields) {
-				String key = field.getName();// 获取属性名
+			for (var field : fields) {
+				var key = field.getName();// 获取属性名
 				if(bean.get(key)==null){continue;}
-				String value = bean.get(key).toString();
+				var value = bean.get(key).toString();
 				if (value == null || "null".equals(value)) {continue;}// 如果对应属性的值，bean中不存在，返回继续遍历
 				
-				boolean visiable = field.isAccessible();
+				var visiable = field.isAccessible();
 				field.setAccessible(Boolean.TRUE);
-				Object object = getValueFromField(field, key, value);
+				var object = getValueFromField(field, key, value);
 				field.set(t, object);
 				field.setAccessible(visiable);
 			}
@@ -402,9 +403,9 @@ public class ConvertUtils {
 	 * 通过反射获取值
 	 */
 	public static Object getValueFromField(Field field, String name, String value) {
-		String temp = value;
+		var temp = value;
 		Object object = value;
-		String type = field.getType().getSimpleName();
+		var type = field.getType().getSimpleName();
 		
 		if (StringUtils.isEmpty(temp) && ("Short,short,int,Integer,Long,long,Double,double,Float,float".contains(type))) {
 			temp = "0";
@@ -443,10 +444,10 @@ public class ConvertUtils {
 	 * 获取所有父类的属性列表
 	 */
 	public static Field[] getSuperFields(Class<?> subCls, List<Field> subFields) {
-		Class<?> superClass = subCls.getSuperclass();
+		var superClass = subCls.getSuperclass();
 		List<Field> tempSubFields = new ArrayList<Field>(subFields);
 		if (superClass != null && superClass != Object.class) {
-			Field[] superFields = superClass.getDeclaredFields();
+			var superFields = superClass.getDeclaredFields();
 			tempSubFields.addAll(Arrays.asList(superFields));
 			if (superClass.getSuperclass() != Object.class){
 				getSuperFields(superClass, tempSubFields);// 递归调用
@@ -460,9 +461,9 @@ public class ConvertUtils {
 	 */
 	public static Object getValueFromField(Object object, Field field) {
 		try {
-			Object value = field.get(object);
+			var value = field.get(object);
 			
-			String type = field.getType().getSimpleName();
+			var type = field.getType().getSimpleName();
 			if ("short".equals(type)) { // Short
 				value = field.getShort(object);
 			} else if ("char".equals(type)) { // char
@@ -502,12 +503,12 @@ public class ConvertUtils {
 	 * @return
 	 */
 	public static String format(Date date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		var dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return date == null ? "" : dateFormat.format(date);
 	}
 	
 	public static Date parse(String date) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		var dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			return StringUtils.isEmpty(date) ? null : dateFormat.parse(date);
 		} catch (ParseException e) {
@@ -521,7 +522,7 @@ public class ConvertUtils {
 	 * @return
 	 */
 	public static String bytes2String(byte[] bytes) {
-		StringBuilder builder = new StringBuilder(bytes.length * 2);
+		var builder = new StringBuilder(bytes.length * 2);
 		for (int i = 0; i < bytes.length; i++) {
 			builder.append(HEXCHAR[(bytes[i] & 0xf0) >>> 4]);
 			builder.append(HEXCHAR[bytes[i] & 0x0f]);
@@ -536,8 +537,8 @@ public class ConvertUtils {
 	 * @return
 	 */
 	public static byte[] string2Bytes(String str) {
-		byte[] bytes = new byte[str.length() / 2];
-		for (int i = 0; i < bytes.length; i++) {
+		var bytes = new byte[str.length() / 2];
+		for (var i = 0; i < bytes.length; i++) {
 			bytes[i] = (byte) Integer.parseInt(str.substring(2 * i, 2 * i + 2), 16);
 		}
 		return bytes;

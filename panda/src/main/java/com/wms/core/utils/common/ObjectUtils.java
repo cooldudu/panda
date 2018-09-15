@@ -1,5 +1,6 @@
 package com.wms.core.utils.common;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,14 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.util.StringUtils;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 对象校验工具类
@@ -24,7 +20,7 @@ public class ObjectUtils {
 	/**
 	 * 检验对象是否为空
 	 * 
-	 * @param object
+	 * @param obj
 	 * @return
 	 */
 	public static boolean isEmpty(Object obj) {
@@ -55,73 +51,7 @@ public class ObjectUtils {
 	/**
 	 * 返回字符串如为空返回默认值
 	 * 
-	 * @param param
-	 * @return
-	 */
-	public static Integer getIntParameter(String param) {
-		String str = ((ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes()).getRequest().getParameter(param);
-		return ConvertUtils.getInteger(str);
-	}
-
-	/**
-	 * 返回字符串如为空返回默认值
-	 * 
-	 * @param param
-	 * @return
-	 */
-	public static Integer getIntParameter(HttpServletRequest request,
-			String param) {
-		String str = request.getParameter(param);
-		return ConvertUtils.getInteger(str);
-	}
-
-	/**
-	 * 返回字符串如为空返回默认值
-	 * 
-	 * @param param
-	 * @return
-	 */
-	public static String getParameter(String param, String defval) {
-		String str = ContextUtils.getRequest().getParameter(param);
-		if (ObjectUtils.isEmpty(str)) {
-			return defval;
-		}
-		return str.toString();
-	}
-
-	/**
-	 * 返回字符串如为空返回默认值
-	 * 
-	 * @param param
-	 * @return
-	 */
-	public static String getParameter(String param) {
-		String str = ContextUtils.getRequest().getParameter(param);
-		if (ObjectUtils.isEmpty(str)) {
-			return "";
-		}
-		return str.toString();
-	}
-
-	/**
-	 * 返回字符串如为空返回默认值
-	 * 
-	 * @param param
-	 * @return
-	 */
-	public static String getParameter(HttpServletRequest request, String param) {
-		String str = request.getParameter(param);
-		if (ObjectUtils.isEmpty(str)) {
-			return "";
-		}
-		return str.toString();
-	}
-
-	/**
-	 * 返回字符串如为空返回默认值
-	 * 
-	 * @param str
+	 * @param s
 	 * @param defval
 	 * @return
 	 */
@@ -135,7 +65,7 @@ public class ObjectUtils {
 	/**
 	 * 返回Integer如为空返回默认值
 	 * 
-	 * @param str
+	 * @param s
 	 * @param defval
 	 * @return
 	 */
@@ -171,10 +101,10 @@ public class ObjectUtils {
 		return -s1;
 	}
 
-	public static Object getObject(Class<?> cls) {
+	public static Object getObject(Class<?> cls) throws NoSuchMethodException, InvocationTargetException {
 		Object object = null;
 		try {
-			object = Class.forName(cls.getName()).newInstance();
+			object = Class.forName(cls.getName()).getDeclaredConstructor().newInstance();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -201,7 +131,7 @@ public class ObjectUtils {
 	/**
 	 * 检验字符串是否为空
 	 * 
-	 * @param str
+	 * @param obj
 	 * @return
 	 */
 	public static boolean isNotEmpty(Object obj) {
@@ -212,7 +142,7 @@ public class ObjectUtils {
 	 * 判断某个字符串是否存在于数组中
 	 */
 	public static boolean contains(String[] stringArray, String source) {
-		List<String> tempList = Arrays.asList(stringArray);
+		var tempList = Arrays.asList(stringArray);
 		if (tempList.contains(source)) {
 			return true;
 		} else {
@@ -224,16 +154,16 @@ public class ObjectUtils {
 	 * java风格编程：驼峰式命名<br/>
 	 * eg:user_name -> userName
 	 * 
-	 * @param tableName
+	 * @param columnName
 	 * @return String
 	 */
 	public static String javaStyle(String columnName) {
-		String patternStr = "(_[a-z])";
-		Pattern pattern = Pattern.compile(patternStr);
-		Matcher matcher = pattern.matcher(columnName);
-		StringBuffer buf = new StringBuffer();
+		var patternStr = "(_[a-z])";
+		var pattern = Pattern.compile(patternStr);
+		var matcher = pattern.matcher(columnName);
+		var buf = new StringBuffer();
 		while (matcher.find()) {
-			String replaceStr = matcher.group();
+			var replaceStr = matcher.group();
 			matcher.appendReplacement(buf, replaceStr.toUpperCase());
 		}
 		matcher.appendTail(buf);
@@ -262,29 +192,5 @@ public class ObjectUtils {
 	 */
 	public static <T> List<T> getArrayList() {
 		return new ArrayList<T>();
-	}
-
-	/**
-	 * 获取客户端IP
-	 */
-	public static String getIpAddr() {
-		HttpServletRequest request = ContextUtils.getRequest();
-		String ip = request.getHeader("X-Forwarded-For");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_CLIENT_IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		return ip;
 	}
 }

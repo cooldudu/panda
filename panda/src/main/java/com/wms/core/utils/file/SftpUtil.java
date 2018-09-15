@@ -36,18 +36,18 @@ public class SftpUtil {
     public static ChannelSftp connect(String host, int port, String username,  
             String password) {  
         ChannelSftp sftp = null;  
-        try {  
-            JSch jsch = new JSch();  
-            jsch.getSession(username, host, port);  
-            Session sshSession = jsch.getSession(username, host, port);  
+        try {
+            var jsch = new JSch();
+            jsch.getSession(username, host, port);
+            var sshSession = jsch.getSession(username, host, port);
             System.out.println("Session创建成功");  
-            sshSession.setPassword(password);  
-            Properties sshConfig = new Properties();  
+            sshSession.setPassword(password);
+            var sshConfig = new Properties();
             sshConfig.put("StrictHostKeyChecking", "no");  
             sshSession.setConfig(sshConfig);  
             sshSession.connect();  
-            System.out.println("Session已连接");  
-            Channel channel = sshSession.openChannel("sftp");  
+            System.out.println("Session已连接");
+            var channel = sshSession.openChannel("sftp");
             channel.connect();  
             sftp = (ChannelSftp) channel;  
             System.out.println("连接到主机" + host + ".");  
@@ -61,7 +61,7 @@ public class SftpUtil {
      *  
      * @param host 
      *            主机 
-     * @param port 
+     * @param portStr
      *            端口 
      * @param username 
      *            用户名 
@@ -74,18 +74,18 @@ public class SftpUtil {
     		String password) throws ConnectException {  
     	ChannelSftp sftp = null;  
     	int port=Integer.valueOf(portStr);
-    	try {  
-    		JSch jsch = new JSch();  
-    		jsch.getSession(username, host, port);  
-    		Session sshSession = jsch.getSession(username, host, port);  
+    	try {
+            var jsch = new JSch();
+    		jsch.getSession(username, host, port);
+            var sshSession = jsch.getSession(username, host, port);
     		System.out.println("Session创建成功");  
-    		sshSession.setPassword(password);  
-    		Properties sshConfig = new Properties();  
+    		sshSession.setPassword(password);
+            var sshConfig = new Properties();
     		sshConfig.put("StrictHostKeyChecking", "no");  
     		sshSession.setConfig(sshConfig);  
     		sshSession.connect();  
-    		System.out.println("Session已连接");  
-    		Channel channel = sshSession.openChannel("sftp");  
+    		System.out.println("Session已连接");
+            var channel = sshSession.openChannel("sftp");
     		channel.connect();  
     		sftp = (ChannelSftp) channel;  
     		System.out.println("连接到主机" + host + ".");  
@@ -128,8 +128,8 @@ public class SftpUtil {
      */  
     public void upload(String directory, String uploadFile, ChannelSftp sftp) {  
         try {  
-            sftp.cd(directory);  
-            File file = new File(uploadFile);  
+            sftp.cd(directory);
+            var file = new File(uploadFile);
             sftp.put(new FileInputStream(file), file.getName());  
         } catch (Exception e) {  
             e.printStackTrace();  
@@ -140,7 +140,7 @@ public class SftpUtil {
      * 文件上传 
      *  
      * @param directory 目录 
-     * @param uploadFile 要上传的文件名 
+     * @param file 要上传的文件名
      * @param sftp 
      */  
     public static void uploadRemoteFile(String directory, File file, ChannelSftp sftp) {  
@@ -168,7 +168,7 @@ public class SftpUtil {
             sftp.cd(directory);  
             
 //             directory=directory+"/"+downloadFile;
-            File file = new File(saveFile);  
+            var file = new File(saveFile);
             sftp.get(downloadFile, new FileOutputStream(file));  
         } catch (Exception e) {  
             e.printStackTrace();  
@@ -239,23 +239,5 @@ public class SftpUtil {
     public Vector listFiles(String directory, ChannelSftp sftp)  
             throws SftpException {  
         return sftp.ls(directory);  
-    }  
-    
-    public static void main(String[] args) {
-    	//建立链接  
-    	SftpUtil sf = new SftpUtil();   
-        String host = "192.168.10.143";  
-        int port = 22;  
-        String username = "testftp";  
-        String password = "testftp";  
-        ChannelSftp sftp=sf.connect(host, port, username, password);  
-        //删除
-        String directory = "/home/testftp/tmp/40288abc61301d8101613130637b000e";  
-        String deleteFile = "sample_40288abc61301d8101613130637b000e_20180126143830.txt";  
-//        sf.delete(directory, deleteFile, sftp);  
-        sf.download("/home/testftp/tmp/40288abc61301d8101613132fb86000f", 
-        		"sample_40288abc61301d8101613132fb86000f_20180126144120.txt", "D:\\11.txt", sftp);
-	}
-    
-    
+    }
 }

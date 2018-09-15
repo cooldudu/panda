@@ -23,12 +23,12 @@ public class StringUtil {
 	/**
 	 * 帮助输入框中所输入的字符串首字母
 	 *
-	 * @param chineseStr
+	 * @param query
 	 * @return
 	 */
 	public static String getFirstCharForQueryString(String query)
 			throws Exception {
-		String firstChar = "";
+		var firstChar = "";
 		if (query.length() >= 1) {
 			firstChar = query.substring(0, 1);
 			return firstChar;
@@ -48,17 +48,17 @@ public class StringUtil {
 		Random random;
 		BufferedImage image;
 		Font font;
-		int distance = 15;
-		String str = "Ab1Cd7EfG5hJk8Lm6NPqRSTuVwXYz0123456789";
+		var distance = 15;
+		var str = "Ab1Cd7EfG5hJk8Lm6NPqRSTuVwXYz0123456789";
 		random = new Random();
 		image = new BufferedImage(70, 25, BufferedImage.TYPE_3BYTE_BGR);
 		font = new Font("Arial", Font.PLAIN, 20);
-		Graphics d = image.getGraphics();
+		var d = image.getGraphics();
 		d.setColor(Color.WHITE);
 		d.fillRect(0, 0, image.getWidth(), image.getHeight());
 		d.setColor(new Color(random.nextInt(100) + 100,
 				random.nextInt(100) + 100, random.nextInt(100) + 100));
-		for (int i = 0; i < 10; i++) {
+		for (var i = 0; i < 10; i++) {
 			d.drawLine(random.nextInt(image.getWidth()),
 					random.nextInt(image.getHeight()),
 					random.nextInt(image.getWidth()),
@@ -66,10 +66,10 @@ public class StringUtil {
 		}
 		d.setColor(Color.BLACK);
 		d.setFont(font);
-		String checkCode = "";
+		var checkCode = "";
 		char tmp = 0;
-		int x = -distance;
-		for (int i = 0; i < show; i++) {
+		var x = -distance;
+		for (var i = 0; i < show; i++) {
 			tmp = str.charAt(random.nextInt(str.length() - 1));
 			checkCode = checkCode + tmp;
 			x = x + distance;
@@ -116,8 +116,8 @@ public class StringUtil {
 	}
 
 	private static void inSet(Set<Long> set, String str) {
-		String[] strarr = str.split(",");
-		for (String a : strarr) {
+		var strarr = str.split(",");
+		for (var a : strarr) {
 			set.add(Long.parseLong(a));
 		}
 	}
@@ -156,10 +156,10 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String replaceBlank(String str) {
-		String dest = "";
+		var dest = "";
 		if (str != null) {
-			Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-			Matcher m = p.matcher(str);
+			var p = Pattern.compile("\\s*|\t|\r|\n");
+			var m = p.matcher(str);
 			dest = m.replaceAll("");
 		}
 		return dest;
@@ -172,17 +172,17 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String replaceString(String str) {
-		String dest = "";
+		var dest = "";
 		if (str != null) {
-			Pattern p = Pattern.compile("\\t|\r|\n");
-			Matcher m = p.matcher(str);
+			var p = Pattern.compile("\\t|\r|\n");
+			var m = p.matcher(str);
 			dest = m.replaceAll("");
 		}
 		return dest;
 	}
 
 	public static String queryGetMethodString(String field) {
-		StringBuffer result = new StringBuffer();
+		var result = new StringBuffer();
 		if (!ObjectUtils.isEmpty(field) && field.length() > 1) {
 			result.append("get");
 			result.append(field.substring(0, 1).toUpperCase());
@@ -192,7 +192,7 @@ public class StringUtil {
 	}
 
 	public static String querySetMethodString(String field) {
-		StringBuffer result = new StringBuffer();
+		var result = new StringBuffer();
 		if (!ObjectUtils.isEmpty(field) && field.length() > 1) {
 			result.append("set");
 			result.append(field.substring(0, 1).toUpperCase());
@@ -210,7 +210,7 @@ public class StringUtil {
 	public static String getnumRate(int num1, int num2,String num) {
 		String result = null ;
 		// 创建一个数值格式化对象
-		NumberFormat numberFormat = NumberFormat.getInstance();
+		var numberFormat = NumberFormat.getInstance();
 		numberFormat.setMaximumFractionDigits(2);// 设置精确到小数点后2位
 		if("1".equals(num)){//1-
 			if(num2 >0){
@@ -249,10 +249,10 @@ public class StringUtil {
 	public static String encoding(String src) {
 		if (src == null)
 		return "";
-		StringBuilder result = new StringBuilder();
+		var result = new StringBuilder();
 		if (StringUtils.hasText(src)) {
 		src = src.trim();
-		for (int pos = 0; pos < src.length(); pos++) {
+		for (var pos = 0; pos < src.length(); pos++) {
 		switch (src.charAt(pos)) {
 		case '\"':
 		result.append("&quot;");

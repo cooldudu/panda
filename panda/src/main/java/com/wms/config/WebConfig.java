@@ -1,6 +1,5 @@
 package com.wms.config;
 
-import io.undertow.UndertowOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -13,13 +12,13 @@ import org.springframework.web.reactive.config.ResourceHandlerRegistry;
 import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import  org.springframework.validation.Validator;
+import org.springframework.web.reactive.resource.VersionResourceResolver;
 import org.springframework.web.reactive.result.view.HttpMessageWriterView;
 import org.springframework.web.reactive.result.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.reactive.result.view.freemarker.FreeMarkerViewResolver;
 
-import java.nio.charset.Charset;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
 
 
 @Configuration
@@ -42,15 +41,15 @@ public class WebConfig implements WebFluxConfigurer{
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.freeMarker().suffix(".html");
-        Jackson2JsonEncoder encoder = new Jackson2JsonEncoder();
+        var encoder = new Jackson2JsonEncoder();
         registry.defaultViews(new HttpMessageWriterView(encoder));
     }
 
     @Bean
     public FreeMarkerConfigurer freeMarkerConfigurer() {
-        FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
-        configurer.setTemplateLoaderPath("classpath:/templates/manage");
-        Properties settings = new Properties();
+        var configurer = new FreeMarkerConfigurer();
+        configurer.setTemplateLoaderPath("/static");
+        var settings = new Properties();
         settings.put("default_encoding", "UTF-8");
         settings.put("output_encoding", "UTF-8");
         configurer.setFreemarkerSettings(settings);
@@ -59,9 +58,11 @@ public class WebConfig implements WebFluxConfigurer{
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/public", "classpath:/static/")
-                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
+        registry.addResourceHandler("/console/**")
+                .addResourceLocations("classpath:/static/")
+                .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS))
+                .resourceChain(true)
+                .addResolver(new VersionResourceResolver().addContentVersionStrategy("/**"));
     }
 
     @Bean

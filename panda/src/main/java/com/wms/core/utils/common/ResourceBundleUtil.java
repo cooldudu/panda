@@ -16,18 +16,7 @@ public final class ResourceBundleUtil
 	/**
 	 * 默认文件名称
 	 */
-	public static final String DEFAULT_PROPERTY_FILE_NAME = "default";
-
-	/**
-	 * 分页显示数数
-	 */
-	public static final String SHOW_PAGER_NUM = "showPagerNum";
-
-	/**
-	 * 每页显示记录条数
-	 */
-	public static final String PAGE_SIZE = "pageSize";
-
+	public static final String DEFAULT_PROPERTY_FILE_NAME = "application";
 
 	/**
 	 * 根据文件名称和键名称获取对应的字符串数据
@@ -109,12 +98,12 @@ public final class ResourceBundleUtil
 	}
 
 	public static Properties getProperties(String propertyFileName){
-		int i = propertyFileName.lastIndexOf(".");
+		var i = propertyFileName.lastIndexOf(".");
 		if(i==-1){
 			propertyFileName +=".properties";
 		}
-		InputStream in = getInputStream("/"+propertyFileName);
-		Properties p = new Properties();
+		var in = getInputStream("/"+propertyFileName);
+		var p = new Properties();
 		try {
 			p.load(in);
 		} catch (IOException e) {

@@ -23,7 +23,7 @@ final class DigestAuthUtils {
 
 	static String encodePasswordInA1Format(String username, String realm,
 										   String password) throws UnsupportedEncodingException {
-		String a1 = username + ":" + realm + ":" + password;
+		var a1 = username + ":" + realm + ":" + password;
 
 		return md5Hex(a1);
 	}
@@ -33,16 +33,16 @@ final class DigestAuthUtils {
 			return null;
 		}
 
-		int len = str.length();
+		var len = str.length();
 
 		if (len == 0) {
 			return EMPTY_STRING_ARRAY;
 		}
 
 		List<String> list = new ArrayList<String>();
-		int i = 0;
-		int start = 0;
-		boolean match = false;
+		var i = 0;
+		var start = 0;
+		var match = false;
 
 		while (i < len) {
 			if (str.charAt(i) == '"') {
@@ -111,8 +111,8 @@ final class DigestAuthUtils {
 								 String uri, String qop, String nonce, String nc, String cnonce)
 			throws IllegalArgumentException, UnsupportedEncodingException {
 		String a1Md5;
-		String a2 = httpMethod + ":" + uri;
-		String a2Md5 = md5Hex(a2);
+		var a2 = httpMethod + ":" + uri;
+		var a2Md5 = md5Hex(a2);
 
 		if (passwordAlreadyEncoded) {
 			a1Md5 = password;
@@ -167,7 +167,7 @@ final class DigestAuthUtils {
 
 		Map<String, String> map = new HashMap<String, String>();
 
-		for (String s : array) {
+		for (var s : array) {
 			String postRemove;
 
 			if (removeCharacters == null) {
@@ -176,7 +176,7 @@ final class DigestAuthUtils {
 				postRemove = StringUtils.replace(s, removeCharacters, "");
 			}
 
-			String[] splitThisArrayElement = split(postRemove, delimiter);
+			var splitThisArrayElement = split(postRemove, delimiter);
 
 			if (splitThisArrayElement == null) {
 				continue;
@@ -215,14 +215,14 @@ final class DigestAuthUtils {
 					"Delimiter can only be one character in length");
 		}
 
-		int offset = toSplit.indexOf(delimiter);
+		var offset = toSplit.indexOf(delimiter);
 
 		if (offset < 0) {
 			return null;
 		}
 
-		String beforeDelimiter = toSplit.substring(0, offset);
-		String afterDelimiter = toSplit.substring(offset + 1);
+		var beforeDelimiter = toSplit.substring(0, offset);
+		var afterDelimiter = toSplit.substring(offset + 1);
 
 		return new String[] { beforeDelimiter, afterDelimiter };
 	}

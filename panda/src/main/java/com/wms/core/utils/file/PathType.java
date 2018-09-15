@@ -10,9 +10,9 @@ import java.io.File;
  */
 public class PathType {
 	public static String getPathType() {
-		String result = "";
+		var result = "";
 
-		String osName = System.getProperty("os.name");
+		var osName = System.getProperty("os.name");
 		osName = osName.substring(0, 1);
 		if (osName.equals("W")) {
 			result = "\\";
@@ -22,11 +22,11 @@ public class PathType {
 	}
 
 	public static boolean deleteDirFile(File file) {
-		boolean result = false;
+		var result = false;
 		if (file.isDirectory()) {
-			File[] array = file.listFiles();
+			var array = file.listFiles();
 			if (null != array) {
-				for (int i = 0; i < array.length; i++) // 删除目录下的子目录
+				for (var i = 0; i < array.length; i++) // 删除目录下的子目录
 				{
 					deleteDirFile(array[i]);
 				}
@@ -45,11 +45,11 @@ public class PathType {
 
 	// 创建多级文件夹
 	public static boolean createDirFile(String filepath, String PathType) {
-		boolean result = false;
-		java.util.StringTokenizer st = new java.util.StringTokenizer(filepath,
+		var result = false;
+		var st = new java.util.StringTokenizer(filepath,
 				PathType);
-		String temp = "";
-		StringBuffer sb = new StringBuffer();
+		var temp = "";
+		var sb = new StringBuffer();
 		try {
 			while (st.hasMoreTokens()) {
 				temp = st.nextToken();
@@ -73,10 +73,10 @@ public class PathType {
 	 * @return 返回目录创建后的路径
 	 */
 	public String createFolder(String folderPath) {
-		boolean result = false;
-		String txt = folderPath;
+		var result = false;
+		var txt = folderPath;
 		try {
-			File myFilePath = new File(txt);
+			var myFilePath = new File(txt);
 			txt = folderPath;
 			if (!myFilePath.exists()) {
 				result = myFilePath.mkdir();
@@ -98,13 +98,13 @@ public class PathType {
 	 */
 	@SuppressWarnings("unused")
 	public String createFolders(String folderPath, String paths) {
-		String txts = folderPath;
+		var txts = folderPath;
 		try {
 			String txt;
 			txts = folderPath;
-			java.util.StringTokenizer st = new java.util.StringTokenizer(paths,
+			var st = new java.util.StringTokenizer(paths,
 					"|");
-			for (int i = 0; st.hasMoreTokens(); i++) {
+			for (var i = 0; st.hasMoreTokens(); i++) {
 				txt = st.nextToken().trim();
 				if (txts.lastIndexOf("/") != -1) {
 					txts = createFolder(txts + txt);

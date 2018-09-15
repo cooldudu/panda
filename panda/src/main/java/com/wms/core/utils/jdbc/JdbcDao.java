@@ -81,7 +81,7 @@ public class JdbcDao extends JdbcDaoSupport implements IJdbcDao {
 		ResultSet rs = null ;
 		try {
 			conn = getJdbcTemplate().getDataSource().getConnection();
-			DatabaseMetaData data = conn.getMetaData();
+			var data = conn.getMetaData();
 			String[] types = {"TABLE"};
 			rs = data.getTables(null, null, table, types);
 			if(rs.next()){

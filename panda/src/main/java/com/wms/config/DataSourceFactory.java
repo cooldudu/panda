@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 
 public class DataSourceFactory {
     public static DataSource makeDataSource(){
-        HikariDataSource ds = new HikariDataSource();
+        var ds = new HikariDataSource();
         ds.setDriverClassName(ResourceBundleUtil.getString("application","spring.datasource.driver-class-name"));
         ds.setJdbcUrl(ResourceBundleUtil.getString("application","spring.datasource.url"));
         ds.setUsername(ResourceBundleUtil.getString("application","spring.datasource.username"));
