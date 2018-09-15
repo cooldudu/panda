@@ -1,0 +1,57 @@
+Manifest-Version: 1.0
+Class-Path: reactor-core-3.1.8.RELEASE.jar spring-data-keyvalue-2.0.8.
+ RELEASE.jar spring-boot-autoconfigure-2.0.3.RELEASE.jar netty-codec-h
+ ttp-4.1.25.Final.jar mchange-commons-java-0.2.11.jar hibernate-valida
+ tor-6.0.10.Final.jar commons-lang3-3.7.jar config-1.2.1.jar freemarke
+ r-2.3.28.jar validation-api-2.0.1.Final.jar spring-data-redis-2.0.8.R
+ ELEASE.jar scala-reflect-2.11.12.jar HikariCP-3.2.0.jar slick-codegen
+ _2.11-3.2.3.jar spring-boot-starter-webflux-2.0.3.RELEASE.jar spring-
+ boot-2.0.3.RELEASE.jar spring-aspects-5.0.7.RELEASE.jar spring-data-c
+ ommons-2.0.8.RELEASE.jar xnio-nio-3.3.8.Final.jar scala-compiler-2.11
+ .12.jar jedis-2.9.0.jar json-smart-2.3.jar asm-5.0.4.jar spring-secur
+ ity-config-5.0.6.RELEASE.jar play-json_2.11-2.6.9.jar jackson-datatyp
+ e-jdk8-2.9.6.jar javax.annotation-api-1.3.2.jar log4j-core-2.10.0.jar
+  spring-boot-starter-data-redis-2.0.3.RELEASE.jar scala-library-2.11.
+ 12.jar jboss-logging-3.3.2.Final.jar slick-hikaricp_2.11-3.2.3.jar as
+ pectjrt-1.8.13.jar spring-boot-test-2.0.3.RELEASE.jar scala-parser-co
+ mbinators_2.11-1.0.4.jar spring-aop-5.0.7.RELEASE.jar classmate-1.3.4
+ .jar reactor-netty-0.7.8.RELEASE.jar spring-tx-5.0.7.RELEASE.jar obje
+ nesis-2.6.jar mockito-core-2.15.0.jar xmlunit-core-2.5.1.jar macro-co
+ mpat_2.11-1.1.1.jar netty-transport-4.1.25.Final.jar reactor-test-3.1
+ .8.RELEASE.jar byte-buddy-1.7.11.jar spring-security-web-5.0.6.RELEAS
+ E.jar netty-codec-socks-4.1.25.Final.jar spring-core-5.0.7.RELEASE.ja
+ r spring-jdbc-5.0.7.RELEASE.jar netty-transport-native-unix-common-4.
+ 1.25.Final.jar log4j-jul-2.10.0.jar commons-csv-1.5.jar android-json-
+ 0.0.20131108.vaadin1.jar aspectjweaver-1.9.1.jar json-path-2.4.0.jar 
+ spring-boot-starter-quartz-2.0.3.RELEASE.jar snakeyaml-1.19.jar sprin
+ g-boot-starter-aop-2.0.3.RELEASE.jar nio-multipart-parser-1.1.0.jar s
+ pring-boot-starter-2.0.3.RELEASE.jar commons-net-3.6.jar spring-boot-
+ starter-json-2.0.3.RELEASE.jar jackson-annotations-2.9.0.jar jackson-
+ datatype-jsr310-2.9.6.jar jackson-core-2.9.6.jar spring-boot-starter-
+ test-2.0.3.RELEASE.jar spring-jcl-5.0.7.RELEASE.jar nio-stream-storag
+ e-1.1.3.jar jackson-databind-2.9.6.jar netty-handler-4.1.25.Final.jar
+  netty-common-4.1.25.Final.jar jsch-0.1.54.jar lettuce-core-5.0.4.REL
+ EASE.jar play-functional_2.11-2.6.9.jar reactive-streams-1.0.2.jar ne
+ tty-buffer-4.1.25.Final.jar spring-boot-starter-data-redis-reactive-2
+ .0.3.RELEASE.jar spring-boot-test-autoconfigure-2.0.3.RELEASE.jar net
+ ty-handler-proxy-4.1.25.Final.jar scala-xml_2.11-1.0.5.jar active-sli
+ ck_2.11-0.3.5.jar netty-transport-native-epoll-4.1.25.Final-linux-x86
+ _64.jar junit-4.12.jar byte-buddy-agent-1.7.11.jar netty-resolver-4.1
+ .25.Final.jar spring-boot-starter-jdbc-2.0.3.RELEASE.jar spring-boot-
+ devtools-2.0.3.RELEASE.jar jul-to-slf4j-1.7.25.jar quartz-2.3.0.jar s
+ pring-boot-starter-security-2.0.3.RELEASE.jar spring-test-5.0.7.RELEA
+ SE.jar spring-boot-starter-reactor-netty-2.0.3.RELEASE.jar spring-oxm
+ -5.0.7.RELEASE.jar spring-context-5.0.7.RELEASE.jar slf4j-api-1.7.25.
+ jar jackson-module-parameter-names-2.9.6.jar jsonassert-1.5.0.jar log
+ 4j-api-2.10.0.jar slick_2.11-3.2.3.jar accessors-smart-1.2.jar spring
+ -expression-5.0.7.RELEASE.jar joda-time-2.9.9.jar spring-boot-starter
+ -log4j2-2.0.3.RELEASE.jar commons-pool2-2.5.0.jar spring-security-cor
+ e-5.0.6.RELEASE.jar spring-security-test-5.0.6.RELEASE.jar mysql-conn
+ ector-java-5.1.46.jar netty-codec-4.1.25.Final.jar commons-io-2.6.jar
+  slf4j-nop-1.7.25.jar xnio-api-3.3.8.Final.jar spring-beans-5.0.7.REL
+ EASE.jar spring-context-support-5.0.7.RELEASE.jar hamcrest-core-1.3.j
+ ar assertj-core-3.9.1.jar spring-web-5.0.7.RELEASE.jar log4j-slf4j-im
+ pl-2.10.0.jar spring-webflux-5.0.7.RELEASE.jar spring-boot-starter-fr
+ eemarker-2.0.3.RELEASE.jar hamcrest-library-1.3.jar
+Main-Class: com.wms.Application
+
