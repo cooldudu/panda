@@ -1,6 +1,7 @@
 package com.wms.core.database
 
 import com.wms.config.DataSourceFactory
+import com.wms.core.utils.common.ObjectUtils
 import slick.basic.DatabasePublisher
 import slick.dbio.{DBIOAction, Streaming}
 import slick.jdbc.MySQLProfile.api._
@@ -11,21 +12,29 @@ import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 class DatabaseUtil {
-
-}
-object DatabaseUtil {
   import org.slf4j.LoggerFactory
 
   private val LOGGER = LoggerFactory.getLogger(classOf[DatabaseUtil])
   def getDatabase():Database={
-    val db = Database.forDataSource(DataSourceFactory.makeDataSource: javax.sql.DataSource,
-      Some(10: Int))
+    val db = Database.forDataSource(DataSourceFactory.makeDataSource: javax.sql.DataSource, None)
     db
+  }
+
+  def closeDatabase(database:Database)={
+    if(ObjectUtils.isNotEmpty(database)) {
+      database.close
+    }
   }
 
   def getFuture[T](action : DBIO[T]):Future[T] = {
     val db = getDatabase
-    db.run(action)
+    val f = db.run(action)
+    f.onComplete{
+      case Success(n) => closeDatabase(db)
+      case Failure(ex) => closeDatabase(db)
+      case _ => closeDatabase(db)
+    }
+    f
   }
 
   def execRun[T](action: DBIO[T]):Option[T] = {
@@ -70,6 +79,7 @@ object DatabaseUtil {
 
   def getStream[T](action:DBIOAction[_, Streaming[T], Nothing]):DatabasePublisher[T] = {
     val db = getDatabase
-    db.stream(action)
+    val f = db.stream(action)
+    f
   }
 }
